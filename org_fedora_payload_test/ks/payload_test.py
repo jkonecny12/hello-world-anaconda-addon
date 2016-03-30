@@ -25,9 +25,6 @@ import os.path
 from pyanaconda.addons import AddonData
 from pyanaconda.iutil import getSysroot
 
-from pykickstart.options import KSOptionParser
-from pykickstart.errors import KickstartParseError, formatErrorMsg
-
 # export HelloWorldData class to prevent Anaconda's collect method from taking
 # AddonData class instead of the HelloWorldData class
 # :see: pyanaconda.kickstart.AnacondaKSHandler.__init__
@@ -51,8 +48,6 @@ class PayloadTestData(AddonData):
         """
 
         AddonData.__init__(self, name)
-        self.text = ""
-        self.reverse = False
 
     def __str__(self):
         """
@@ -60,14 +55,7 @@ class PayloadTestData(AddonData):
         section containing string representation of the stored data.
 
         """
-
-        addon_str = "%%addon %s" % self.name
-
-        if self.reverse:
-            addon_str += " --reverse"
-
-        addon_str += "\n%s\n%%end\n" % self.text
-        return addon_str
+        return "Payload tested"
 
     def handle_header(self, lineno, args):
         """
@@ -86,22 +74,7 @@ class PayloadTestData(AddonData):
         :param args: the list of arguments from the %addon line
         :type args: list
         """
-
-        op = KSOptionParser()
-        op.add_option("--reverse", action="store_true", default=False,
-                dest="reverse", help="Reverse the display of the addon text")
-        (opts, extra) = op.parse_args(args=args, lineno=lineno)
-
-        # Reject any additional arguments.
-        if extra:
-            msg = "Unhandled arguments on %%addon line for %s" % self.name
-            if lineno != None:
-                raise KickstartParseError(formatErrorMsg(lineno, msg=msg))
-            else:
-                raise KickstartParseError(msg)
-
-        # Store the result of the option parsing
-        self.reverse = opts.reverse
+        pass
 
     def handle_line(self, line):
         """
@@ -112,12 +85,7 @@ class PayloadTestData(AddonData):
         :type line: str
 
         """
-
-        # simple example, we just append lines to the text attribute
-        if self.text is "":
-            self.text = line.strip()
-        else:
-            self.text += " " + line.strip()
+        pass
 
     def finalize(self):
         """
