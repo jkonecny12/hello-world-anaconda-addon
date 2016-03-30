@@ -2,5 +2,5 @@
 # if X server is not yet running
 #import gui
 
-import tui
+#import tui
 import ks

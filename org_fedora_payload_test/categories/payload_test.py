@@ -17,15 +17,15 @@
 #
 # Red Hat Author(s): Vratislav Podzimek <vpodzime@redhat.com>
 #
-"""Hello world category module"""
+"""Payload test category module"""
 
 N_ = lambda x: x
 
 from pyanaconda.ui.categories import SpokeCategory
 
-__all__ = ["HelloWorldCategory"]
+__all__ = ["PayloadTestCategory"]
 
-class HelloWorldCategory(SpokeCategory):
+class PayloadTestCategory(SpokeCategory):
     """
     Class for the Hello world category. Category groups related spokes
     together. Both logically and visually (creates a box on a hub). It
@@ -37,4 +37,4 @@ class HelloWorldCategory(SpokeCategory):
 
     displayOnHubGUI = "SummaryHub"
     displayOnHubTUI = "SummaryHub"
-    title = N_("HELLO WORLD")
+    title = N_("PAYLOAD TEST")

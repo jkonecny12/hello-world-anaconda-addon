@@ -31,11 +31,11 @@ from pykickstart.errors import KickstartParseError, formatErrorMsg
 # export HelloWorldData class to prevent Anaconda's collect method from taking
 # AddonData class instead of the HelloWorldData class
 # :see: pyanaconda.kickstart.AnacondaKSHandler.__init__
-__all__ = ["HelloWorldData"]
+__all__ = ["PayloadTestData"]
 
-HELLO_FILE_PATH = "/root/hello_world_addon_output.txt"
+INSTALL_GROUPS = "/root/groups.txt"
 
-class HelloWorldData(AddonData):
+class PayloadTestData(AddonData):
     """
     Class parsing and storing data for the Hello world addon.
 
@@ -131,7 +131,7 @@ class HelloWorldData(AddonData):
         # no actions needed in this addon
         pass
 
-    def setup(self, storage, ksdata, instclass):
+    def setup(self, storage, ksdata, instclass, payload):
         """
         The setup method that should make changes to the runtime environment
         according to the data stored in this object.
@@ -147,10 +147,9 @@ class HelloWorldData(AddonData):
 
         """
 
-        # no actions needed in this addon
-        pass
+        payload.selectPackage('vim')
 
-    def execute(self, storage, ksdata, instclass, users):
+    def execute(self, storage, ksdata, instclass, users, payload):
         """
         The execute method that should make changes to the installed system. It
         is called only once in the post-install setup phase.
@@ -161,6 +160,6 @@ class HelloWorldData(AddonData):
 
         """
 
-        hello_file_path = os.path.normpath(getSysroot() + HELLO_FILE_PATH)
-        with open(hello_file_path, "w") as fobj:
-            fobj.write("%s\n" % self.text)
+        packages_out = os.path.normpath(getSysroot() + INSTALL_GROUPS)
+        with open(packages_out, "w") as fobj:
+            fobj.write("%s\n" % payload.groups)
